@@ -4,7 +4,9 @@ describe Gemonames do
   let(:client) { Gemonames.client(username: "demo") }
 
   it "performs a search based on city and country code" do
-    result = client.search("Celje", country_code: "si")
+    result = VCR.use_cassette "search-city-and-country-code" do
+      client.search("Celje", country_code: "si")
+    end
 
     aggregate_failures do
       expect(result.result?).to be_truthy
@@ -17,7 +19,9 @@ describe Gemonames do
   end
 
   it "returns an empty result" do
-    result = client.search("UnknownPlace", country_code: "si")
+    result = VCR.use_cassette "search-no-result" do
+      client.search("UnknownPlace", country_code: "si")
+    end
 
     expect(result.result?).to be_falsey
   end

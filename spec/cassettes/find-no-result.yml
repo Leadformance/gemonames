@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api.geonames.org/searchJSON?country=si&maxRows=10&q=UnknownPlace&style=short&username=demo
+    uri: http://api.geonames.org/searchJSON?country=si&maxRows=1&q=UnknownPlace&style=short&username=demo
     body:
       encoding: US-ASCII
       string: ''

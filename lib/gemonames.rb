@@ -28,38 +28,38 @@ module Gemonames
     end
 
     def search(query, country_code:, limit: 10)
-      response = connection.get do |request|
-        request.url "/searchJSON".freeze
-        request.params[:q] = query
-        request.params[:country] = country_code
-        request.params[:maxRows] = limit
-        request.params[:style] = "short".freeze
-      end
-
-      response.body.fetch("geonames").map { |result|
+      perform_search_request(
+        query: query, country_code: country_code, max_rows: limit
+      ).fetch("geonames").map { |result|
         wrap_in_search_result(result)
       }
     end
 
     def find(query, country_code:)
-      results = connection.get do |request|
-        request.url "/searchJSON".freeze
-        request.params[:q] = query
-        request.params[:country] = country_code
-        request.params[:maxRows] = 1
-        request.params[:style] = "short".freeze
-      end
+      results = perform_search_request(
+        query: query, country_code: country_code, max_rows: 1
+      ).fetch("geonames")
 
-      result = results.body.fetch("geonames").first
-
-      if result
-        wrap_in_search_result(result)
+      if results.any?
+        wrap_in_search_result(results.first)
       else
         NoResultFound.new
       end
     end
 
     private
+
+    def perform_search_request(query:, country_code:, max_rows:)
+      results = connection.get do |request|
+        request.url "/searchJSON".freeze
+        request.params[:q] = query
+        request.params[:country] = country_code
+        request.params[:maxRows] = max_rows
+        request.params[:style] = "short".freeze
+      end
+
+      results.body
+    end
 
     def wrap_in_search_result(result)
       SearchResult.with(

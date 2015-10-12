@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api.geonames.org/searchJSON?country=si&maxRows=1&q=Celje&style=short&username=demo
+    uri: http://api.geonames.org/searchJSON?country=si&maxRows=5&q=Celje&style=short&username=demo
     body:
       encoding: US-ASCII
       string: ''
@@ -15,7 +15,7 @@ http_interactions:
       message: 
     headers:
       date:
-      - Fri, 09 Oct 2015 08:52:38 GMT
+      - Mon, 12 Oct 2015 09:50:20 GMT
       server:
       - Apache/2.4.6 (Linux/SUSE)
       cache-control:
@@ -29,8 +29,25 @@ http_interactions:
       content-type:
       - application/json;charset=UTF-8
     body:
-      encoding: UTF-8
-      string: '{"totalResultsCount":50,"geonames":[{"lng":"15.26044","geonameId":3202781,"countryCode":"SI","name":"Celje","toponymName":"Celje","lat":"46.23092","fcl":"P","fcode":"PPLA"}]}'
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJ0b3RhbFJlc3VsdHNDb3VudCI6NTAsImdlb25hbWVzIjpbeyJsbmciOiIx
+        NS4yNjA0NCIsImdlb25hbWVJZCI6MzIwMjc4MSwiY291bnRyeUNvZGUiOiJT
+        SSIsIm5hbWUiOiJDZWxqZSIsInRvcG9ueW1OYW1lIjoiQ2VsamUiLCJsYXQi
+        OiI0Ni4yMzA5MiIsImZjbCI6IlAiLCJmY29kZSI6IlBQTEEifSx7ImxuZyI6
+        IjE1LjI3MDI4IiwiZ2VvbmFtZUlkIjozMjAyNzgwLCJjb3VudHJ5Q29kZSI6
+        IlNJIiwibmFtZSI6IkNlbGplIiwidG9wb255bU5hbWUiOiJDZWxqZSIsImxh
+        dCI6IjQ2LjI1IiwiZmNsIjoiQSIsImZjb2RlIjoiQURNMSJ9LHsibG5nIjoi
+        MTUuMjk1MjgiLCJnZW9uYW1lSWQiOjMxODg3NzUsImNvdW50cnlDb2RlIjoi
+        U0kiLCJuYW1lIjoiVHJub3ZsamUgcHJpIENlbGp1IiwidG9wb255bU5hbWUi
+        OiJUcm5vdmxqZSBwcmkgQ2VsanUiLCJsYXQiOiI0Ni4yNTY2NyIsImZjbCI6
+        IlAiLCJmY29kZSI6IlBQTCJ9LHsibG5nIjoiMTUuMzI0MyIsImdlb25hbWVJ
+        ZCI6MzE5NjM3NywiY291bnRyeUNvZGUiOiJTSSIsIm5hbWUiOiJManViZcSN
+        bmEiLCJ0b3BvbnltTmFtZSI6IkxqdWJlxI1uYSIsImxhdCI6IjQ2LjI1NTY3
+        IiwiZmNsIjoiUCIsImZjb2RlIjoiUFBMIn0seyJsbmciOiIxNS4yODI1Iiwi
+        Z2VvbmFtZUlkIjozMzM4ODY3LCJjb3VudHJ5Q29kZSI6IlNJIiwibmFtZSI6
+        Ilp2b2RubyIsInRvcG9ueW1OYW1lIjoiWnZvZG5vIiwibGF0IjoiNDYuMjA5
+        NDQiLCJmY2wiOiJQIiwiZmNvZGUiOiJQUEwifV19
     http_version: 
-  recorded_at: Fri, 09 Oct 2015 08:52:38 GMT
+  recorded_at: Mon, 12 Oct 2015 09:50:20 GMT
 recorded_with: VCR 2.9.3

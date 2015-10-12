@@ -27,26 +27,46 @@ module Gemonames
       @connection = connection
     end
 
-    def search(query, country_code:)
+    def search(query, country_code:, limit: 10)
+      perform_search_request(
+        query: query, country_code: country_code, max_rows: limit
+      ).fetch("geonames").map { |result|
+        wrap_in_search_result(result)
+      }
+    end
+
+    def find(query, country_code:)
+      results = perform_search_request(
+        query: query, country_code: country_code, max_rows: 1
+      ).fetch("geonames")
+
+      if results.any?
+        wrap_in_search_result(results.first)
+      else
+        NoResultFound.new
+      end
+    end
+
+    private
+
+    def perform_search_request(query:, country_code:, max_rows:)
       results = connection.get do |request|
         request.url "/searchJSON".freeze
         request.params[:q] = query
         request.params[:country] = country_code
-        request.params[:maxRows] = 1
+        request.params[:maxRows] = max_rows
         request.params[:style] = "short".freeze
       end
 
-      result = results.body.fetch("geonames").first
+      results.body
+    end
 
-      if result
-        SearchResult.with(
-          geoname_id: result.fetch("geonameId"),
-          name: result.fetch("name"),
-          country_code: result.fetch("countryCode"),
-        )
-      else
-        NoSearchResult.new
-      end
+    def wrap_in_search_result(result)
+      SearchResult.with(
+        geoname_id: result.fetch("geonameId".freeze),
+        name: result.fetch("name".freeze),
+        country_code: result.fetch("countryCode".freeze),
+      )
     end
   end
 
@@ -56,7 +76,7 @@ module Gemonames
     end
   end
 
-  class NoSearchResult
+  class NoResultFound
     def geoname_id() end
     def name() end
     def country_code() end

@@ -55,7 +55,7 @@ module Gemonames
         request.params[:q] = query
         request.params[:country] = country_code
         request.params[:maxRows] = max_rows
-        request.params[:style] = "short".freeze
+        request.params[:style] = "full".freeze
       end
 
       results.body
@@ -66,11 +66,23 @@ module Gemonames
         geoname_id: result.fetch("geonameId".freeze),
         name: result.fetch("name".freeze),
         country_code: result.fetch("countryCode".freeze),
+        hierarchy: admin_ids.each_with_object([]) { |id, mem| mem << result[id] if result[id] }
       )
+    end
+
+    def admin_ids
+      # follow http://download.geonames.org/export/dump/readme.txt
+      [
+        "adminId4",
+        "adminId3",
+        "adminId2",
+        "adminId1",
+        "countryId"
+      ]
     end
   end
 
-  SearchResult = Value.new(:geoname_id, :name, :country_code) do
+  SearchResult = Value.new(:geoname_id, :name, :country_code, :hierarchy) do
     def result?
       true
     end

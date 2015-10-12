@@ -15,6 +15,7 @@ describe Gemonames do
           geoname_id: 3202781,
           name: "Celje",
           country_code: "SI",
+          hierarchy: ["3202780", "3190538"],
         )
       end
     end
@@ -40,6 +41,7 @@ describe Gemonames do
           geoname_id: 3202781,
           name: "Celje",
           country_code: "SI",
+          hierarchy: ["3202780", "3190538"],
         )
       end
     end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api.geonames.org/searchJSON?country=si&maxRows=1&q=Celje&style=short&username=demo
+    uri: http://api.geonames.org/searchJSON?country=si&maxRows=1&q=Celje&style=full&username=demo
     body:
       encoding: US-ASCII
       string: ''
@@ -15,7 +15,7 @@ http_interactions:
       message: 
     headers:
       date:
-      - Mon, 12 Oct 2015 09:51:02 GMT
+      - Mon, 12 Oct 2015 13:12:43 GMT
       server:
       - Apache/2.4.6 (Linux/SUSE)
       cache-control:
@@ -29,8 +29,48 @@ http_interactions:
       content-type:
       - application/json;charset=UTF-8
     body:
-      encoding: UTF-8
-      string: '{"totalResultsCount":50,"geonames":[{"lng":"15.26044","geonameId":3202781,"countryCode":"SI","name":"Celje","toponymName":"Celje","lat":"46.23092","fcl":"P","fcode":"PPLA"}]}'
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJ0b3RhbFJlc3VsdHNDb3VudCI6NTAsImdlb25hbWVzIjpbeyJ0aW1lem9u
+        ZSI6eyJnbXRPZmZzZXQiOjEsInRpbWVab25lSWQiOiJFdXJvcGUvTGp1Ymxq
+        YW5hIiwiZHN0T2Zmc2V0IjoyfSwiYmJveCI6eyJlYXN0IjoxNS4yOTc3NDQx
+        MzAyMDU1NjcsInNvdXRoIjo0Ni4yMDY3MDA1NjkxMDY3MTUsIm5vcnRoIjo0
+        Ni4yNjQ4OTAzNDkyMjY0Nywid2VzdCI6MTUuMjExMzg3MjkzMDI1OTQ5fSwi
+        YXNjaWlOYW1lIjoiQ2VsamUiLCJjb3VudHJ5SWQiOiIzMTkwNTM4IiwiZmNs
+        IjoiUCIsInNjb3JlIjoyNDcuNDMyMjk2NzUyOTI5NywiY291bnRyeUNvZGUi
+        OiJTSSIsImFkbWluSWQxIjoiMzIwMjc4MCIsImxhdCI6IjQ2LjIzMDkyIiwi
+        ZmNvZGUiOiJQUExBIiwiY29udGluZW50Q29kZSI6IkVVIiwiYWRtaW5Db2Rl
+        MSI6IjExIiwibG5nIjoiMTUuMjYwNDQiLCJnZW9uYW1lSWQiOjMyMDI3ODEs
+        InRvcG9ueW1OYW1lIjoiQ2VsamUiLCJwb3B1bGF0aW9uIjozNzUyMCwiYWRt
+        aW5OYW1lNSI6IiIsImFkbWluTmFtZTQiOiIiLCJhZG1pbk5hbWUzIjoiIiwi
+        YWx0ZXJuYXRlTmFtZXMiOlt7Im5hbWUiOiLQk9C+0YDQsNC0INCm0Y3Qu9C1
+        IiwibGFuZyI6ImJlIn0seyJuYW1lIjoi0KbQtdC70LUiLCJsYW5nIjoiYmci
+        fSx7Im5hbWUiOiJDZWxqZSIsImxhbmciOiJjcyJ9LHsibmFtZSI6IkNlbGpl
+        IiwibGFuZyI6ImRhIn0seyJuYW1lIjoiQ2VsamUiLCJsYW5nIjoiZGUifSx7
+        Im5hbWUiOiLOpM+Dzq3Ou865zrUiLCJsYW5nIjoiZWwifSx7Im5hbWUiOiJD
+        ZWxqZSIsImxhbmciOiJlbiJ9LHsibmFtZSI6IkNlbGplIiwibGFuZyI6ImVz
+        In0seyJuYW1lIjoiQ2VsamUiLCJsYW5nIjoiZmkifSx7Im5hbWUiOiJDZWxq
+        ZSIsImxhbmciOiJmciJ9LHsibmFtZSI6Item15zXmdeUIiwibGFuZyI6Imhl
+        In0seyJuYW1lIjoiQ2VsamUiLCJsYW5nIjoiaHIifSx7Im5hbWUiOiJDZWxq
+        ZSIsImxhbmciOiJpZCJ9LHsibmFtZSI6IkNlbGplIiwibGFuZyI6Iml0In0s
+        eyJuYW1lIjoi44OE44Kn44Oq44KnIiwibGFuZyI6ImphIn0seyJuYW1lIjoi
+        4YOq4YOU4YOa4YOUIiwibGFuZyI6ImthIn0seyJuYW1lIjoi7LK866CIIiwi
+        bGFuZyI6ImtvIn0seyJuYW1lIjoiQ2VsZWlhIiwibGFuZyI6ImxhIn0seyJu
+        YW1lIjoiaHR0cDovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9DZWxqZSIsImxh
+        bmciOiJsaW5rIn0seyJuYW1lIjoiQ2VsxJciLCJsYW5nIjoibHQifSx7Im5h
+        bWUiOiLQptC10LvRmNC1IiwibGFuZyI6Im1rIn0seyJuYW1lIjoiQ2VsamUi
+        LCJsYW5nIjoibmwifSx7Im5hbWUiOiJDZWxqZSIsImxhbmciOiJwbCJ9LHsi
+        bmFtZSI6Itiz24zZhNuM25IiLCJsYW5nIjoicG5iIn0seyJuYW1lIjoiQ2Vs
+        amUiLCJsYW5nIjoicHQifSx7Im5hbWUiOiJDZWxqZSIsImxhbmciOiJybyJ9
+        LHsibmFtZSI6ItCm0LXQu9C1IiwibGFuZyI6InJ1In0seyJuYW1lIjoiQ2Vs
+        amUiLCJsYW5nIjoic2wifSx7Im5hbWUiOiLQptC10ZnQtSIsImxhbmciOiJz
+        ciJ9LHsibmFtZSI6IkNlbGplIiwibGFuZyI6InN2In0seyJuYW1lIjoi0KbQ
+        tdC70YzRlCIsImxhbmciOiJ1ayJ9LHsibmFtZSI6IkNKRSIsImxhbmciOiJ1
+        bmxjIn0seyJuYW1lIjoi6YeH5YiXIiwibGFuZyI6InpoIn1dLCJhZG1pbk5h
+        bWUyIjoiIiwibmFtZSI6IkNlbGplIiwiZmNsTmFtZSI6ImNpdHksIHZpbGxh
+        Z2UsLi4uIiwiY291bnRyeU5hbWUiOiJTbG92ZW5pYSIsImZjb2RlTmFtZSI6
+        InNlYXQgb2YgYSBmaXJzdC1vcmRlciBhZG1pbmlzdHJhdGl2ZSBkaXZpc2lv
+        biIsImFkbWluTmFtZTEiOiJDZWxqZSJ9XX0=
     http_version: 
-  recorded_at: Mon, 12 Oct 2015 09:51:02 GMT
+  recorded_at: Mon, 12 Oct 2015 13:12:43 GMT
 recorded_with: VCR 2.9.3

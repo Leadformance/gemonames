@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api.geonames.org/searchJSON?country=si&maxRows=10&q=UnknownPlace&style=short&username=demo
+    uri: http://api.geonames.org/searchJSON?country=si&maxRows=10&q=UnknownPlace&style=full&username=demo
     body:
       encoding: US-ASCII
       string: ''
@@ -15,7 +15,7 @@ http_interactions:
       message: 
     headers:
       date:
-      - Mon, 12 Oct 2015 09:50:20 GMT
+      - Mon, 12 Oct 2015 13:13:04 GMT
       server:
       - Apache/2.4.6 (Linux/SUSE)
       cache-control:
@@ -32,5 +32,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
-  recorded_at: Mon, 12 Oct 2015 09:50:20 GMT
+  recorded_at: Mon, 12 Oct 2015 13:13:03 GMT
 recorded_with: VCR 2.9.3

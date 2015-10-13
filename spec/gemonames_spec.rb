@@ -15,6 +15,11 @@ describe Gemonames do
           geoname_id: 3202781,
           name: "Celje",
           country_code: "SI",
+          admin_id4: nil,
+          admin_id3: nil,
+          admin_id2: nil,
+          admin_id1: "3202780",
+          country_id: "3190538",
         )
       end
     end
@@ -40,6 +45,11 @@ describe Gemonames do
           geoname_id: 3202781,
           name: "Celje",
           country_code: "SI",
+          admin_id4: nil,
+          admin_id3: nil,
+          admin_id2: nil,
+          admin_id1: "3202780",
+          country_id: "3190538",
         )
       end
     end

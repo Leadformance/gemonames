@@ -55,7 +55,7 @@ module Gemonames
         request.params[:q] = query
         request.params[:country] = country_code
         request.params[:maxRows] = max_rows
-        request.params[:style] = "short".freeze
+        request.params[:style] = "full".freeze
       end
 
       results.body
@@ -66,11 +66,25 @@ module Gemonames
         geoname_id: result.fetch("geonameId".freeze),
         name: result.fetch("name".freeze),
         country_code: result.fetch("countryCode".freeze),
+        admin_id4: result["adminId4".freeze],
+        admin_id3: result["adminId3".freeze],
+        admin_id2: result["adminId2".freeze],
+        admin_id1: result["adminId1".freeze],
+        country_id: result["countryId".freeze],
       )
     end
   end
 
-  SearchResult = Value.new(:geoname_id, :name, :country_code) do
+  SearchResult = Value.new(
+    :geoname_id,
+    :name,
+    :country_code,
+    :admin_id4,
+    :admin_id3,
+    :admin_id2,
+    :admin_id1,
+    :country_id,
+  ) do
     def result?
       true
     end
@@ -80,6 +94,11 @@ module Gemonames
     def geoname_id() end
     def name() end
     def country_code() end
+    def admin_id4() end
+    def admin_id3() end
+    def admin_id2() end
+    def admin_id1() end
+    def country_id() end
 
     def result?
       false

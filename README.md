@@ -22,7 +22,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+client = Gemonames.client(username: "demo")
+
+# Find first result matching query "73000" in France:
+client.find "73000", country_code: "fr"
+#  => #<Gemonames::SearchResult geoname_id=3027422, name="Chambéry",
+#  country_code="FR", admin_id4="6455250", admin_id3="3027421",
+#  admin_id2="2975517", admin_id1="2983751", country_id="3017382">
+
+# Return all result matching query "Pawnee" in US:
+client.search "Pawnee", country_code: "US"
+#  => [... array of results ...]
+```
 
 ## Development
 

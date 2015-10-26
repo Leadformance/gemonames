@@ -7,36 +7,17 @@ module Gemonames
   module_function
   BASE_API_URL = "http://api.geonames.org"
 
-  def client(username: nil, connection: nil, token: nil)
-    connection ||=
-      if token
-        build_connection_using_token(token: token)
-      elsif username
-        build_connection_using_username(username: username)
-      else
-        fail "username or token needs to be defined to build a client"
-      end
-
+  def client(username:, connection: nil, token: nil)
+    connection ||= build_connection(username: username, token: token)
     ApiClient.new(connection)
   end
 
-  def build_connection_using_username(username:)
-    build_connection do |faraday|
-      faraday.params[:username] = username
-    end
-  end
-
-  def build_connection_using_token(token:)
-    build_connection do |faraday|
-      faraday.params[:token] = token
-    end
-  end
-
-  def build_connection
+  def build_connection(username:, token:)
     Faraday.new(url: BASE_API_URL) do |faraday|
       faraday.response :json
       faraday.adapter Faraday.default_adapter
-      yield(faraday)
+      faraday.params[:username] = username
+      faraday.params[:token] = token if token
     end
   end
 

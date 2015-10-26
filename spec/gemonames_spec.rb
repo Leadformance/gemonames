@@ -3,23 +3,6 @@ require "spec_helper"
 describe Gemonames do
   let(:client) { Gemonames.client(username: "demo") }
 
-  describe "token authentication" do
-
-    it "builds connection using username" do
-      expect(Gemonames).to receive(:build_connection_using_username).with(username: "demo")
-      client
-    end
-
-    context "with token" do
-      let(:client) { Gemonames.client(username: "demo", token: "abc") }
-
-      it "prefers token authentication" do
-        expect(Gemonames).to receive(:build_connection_using_token).with(token: "abc")
-        client
-      end
-    end
-  end
-
   describe "#search" do
     it "performs a search based on city and country code" do
       results = VCR.use_cassette "search-city-and-country-code" do

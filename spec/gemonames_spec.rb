@@ -33,20 +33,6 @@ describe Gemonames do
       expect(results).to be_empty
     end
 
-    it "returns empty result when http response not successful" do
-      connection = double "connection",
-        get: instance_double(
-          "Faraday::Response",
-          env: { status: 400 },
-          body: {}
-      )
-      client = Gemonames.client(username: "demo", connection: connection)
-
-      results = client.search("query", country_code: "si")
-
-      expect(results).to be_empty
-    end
-
     it "does logging when provided with a logger" do
       log_output = StringIO.new
       client = Gemonames.client(
@@ -91,20 +77,6 @@ describe Gemonames do
       result = VCR.use_cassette "find-no-result" do
         client.find("UnknownPlace", country_code: "si")
       end
-
-      expect(result.result?).to be_falsey
-    end
-
-    it "returns empty result when http response not successful" do
-      connection = double "connection",
-        get: instance_double(
-          "Faraday::Response",
-          env: { status: 400 },
-          body: {}
-      )
-      client = Gemonames.client(username: "demo", connection: connection)
-
-      result = client.find("query", country_code: "si")
 
       expect(result.result?).to be_falsey
     end

@@ -35,7 +35,7 @@ module Gemonames
     def search(query, country_code:, limit: 10)
       perform_search_request(
         query: query, country_code: country_code, max_rows: limit
-      ).fetch("geonames") { [] }.map { |result|
+      ).fetch("geonames").map { |result|
         wrap_in_search_result(result)
       }
     end
@@ -43,7 +43,7 @@ module Gemonames
     def find(query, country_code:)
       results = perform_search_request(
         query: query, country_code: country_code, max_rows: 1
-      ).fetch("geonames") { [] }
+      ).fetch("geonames")
 
       if results.any?
         wrap_in_search_result(results.first)

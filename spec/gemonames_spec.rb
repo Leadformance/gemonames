@@ -1,4 +1,5 @@
 require "spec_helper"
+require "logger"
 
 describe Gemonames do
   let(:client) { Gemonames.client(username: "demo") }
@@ -45,6 +46,24 @@ describe Gemonames do
 
       expect(results).to be_empty
     end
+
+    it "does logging when provided with a logger" do
+      log_output = StringIO.new
+      client = Gemonames.client(
+        username: "demo",
+        logger: Logger.new(log_output)
+      )
+
+      VCR.use_cassette "search-city-and-country-code" do
+        client.search("Celje", limit: 5, country_code: "si")
+      end
+
+      log_output.rewind
+
+      expect(log_output.read).to include(
+        %Q{[Gemonames] method=GET status=200 url="http://api.geonames.org/searchJSON?}
+      )
+    end
   end
 
   describe "#find" do
@@ -88,6 +107,24 @@ describe Gemonames do
       result = client.find("query", country_code: "si")
 
       expect(result.result?).to be_falsey
+    end
+
+    it "does logging when provided with a logger" do
+      log_output = StringIO.new
+      client = Gemonames.client(
+        username: "demo",
+        logger: Logger.new(log_output)
+      )
+
+      VCR.use_cassette "find-city-and-country-code" do
+        client.find("Celje", country_code: "si")
+      end
+
+      log_output.rewind
+
+      expect(log_output.read).to include(
+        %Q{[Gemonames] method=GET status=200 url="http://api.geonames.org/searchJSON?}
+      )
     end
   end
 end

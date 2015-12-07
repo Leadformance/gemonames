@@ -2,19 +2,23 @@ require "gemonames/version"
 require "values"
 require "faraday"
 require "faraday_middleware"
+require "gemonames/response_logger"
 
 module Gemonames
   module_function
   BASE_API_URL = "http://api.geonames.org"
 
-  def client(username:, connection: nil, token: nil)
-    connection ||= build_connection(username: username, token: token)
+  def client(username:, connection: nil, token: nil, logger: nil)
+    connection ||= build_connection(
+      username: username, token: token, logger: logger
+    )
     ApiClient.new(connection)
   end
 
-  def build_connection(username:, token:)
+  def build_connection(username:, token:, logger:)
     Faraday.new(url: BASE_API_URL) do |faraday|
       faraday.response :json
+      faraday.use ResponseLogger, logger if logger
       faraday.adapter Faraday.default_adapter
       faraday.params[:username] = username
       faraday.params[:token] = token if token

@@ -6,7 +6,9 @@ require "gemonames/response_logger"
 
 module Gemonames
   module_function
-  BASE_API_URL = "http://api.geonames.org"
+
+  FREE_ENDPOINT = "http://api.geonames.org"
+  PREMIUM_ENDPOINT = "http://ws.geonames.net"
 
   def client(username:, connection: nil, token: nil, logger: nil)
     connection ||= build_connection(
@@ -16,7 +18,8 @@ module Gemonames
   end
 
   def build_connection(username:, token:, logger:)
-    Faraday.new(url: BASE_API_URL) do |faraday|
+    url = token ? PREMIUM_ENDPOINT : FREE_ENDPOINT
+    Faraday.new(url: url) do |faraday|
       faraday.response :json
       faraday.use ResponseLogger, logger if logger
       faraday.adapter Faraday.default_adapter

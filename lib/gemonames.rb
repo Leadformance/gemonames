@@ -1,4 +1,5 @@
 require "gemonames/version"
+require "gemonames/web_services"
 require "values"
 require "faraday"
 require "faraday_middleware"
@@ -36,7 +37,8 @@ module Gemonames
     end
 
     def search(query, country_code:, limit: 10)
-      perform_search_request(
+      WebServices.search(
+        connection,
         query: query, country_code: country_code, max_rows: limit
       ).fetch("geonames").map { |result|
         wrap_in_search_result(result)
@@ -44,7 +46,8 @@ module Gemonames
     end
 
     def find(query, country_code:)
-      results = perform_search_request(
+      results = WebServices.search(
+        connection,
         query: query, country_code: country_code, max_rows: 1
       ).fetch("geonames")
 
@@ -56,18 +59,6 @@ module Gemonames
     end
 
     private
-
-    def perform_search_request(query:, country_code:, max_rows:)
-      results = connection.get do |request|
-        request.url "/searchJSON".freeze
-        request.params[:q] = query
-        request.params[:country] = country_code
-        request.params[:maxRows] = max_rows
-        request.params[:style] = "full".freeze
-      end
-
-      results.body
-    end
 
     def wrap_in_search_result(result)
       SearchResult.with(

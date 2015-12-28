@@ -37,19 +37,38 @@ module Gemonames
     end
 
     def search(query, country_code:, limit: 10)
-      WebServices.search(
-        connection,
+      perform_search :search,
         query: query, country_code: country_code, max_rows: limit
-      ).body.fetch("geonames").map { |result|
+    end
+
+    def find(query, country_code:)
+      perform_find :search,
+        query: query, country_code: country_code, max_rows: 1
+    end
+
+    def reverse_find(latitude:, longitude:)
+      perform_find :find_nearby_place_name,
+        latitude: latitude, longitude: longitude, max_rows: 1
+    end
+
+    private
+
+    def perform_search(endpoint, **args)
+      results = WebServices
+        .public_send(endpoint, connection, **args)
+        .body
+        .fetch("geonames")
+
+      results.map { |result|
         wrap_in_search_result(result)
       }
     end
 
-    def find(query, country_code:)
-      results = WebServices.search(
-        connection,
-        query: query, country_code: country_code, max_rows: 1
-      ).body.fetch("geonames")
+    def perform_find(endpoint, **args)
+      results = WebServices
+        .public_send(endpoint, connection, **args)
+        .body
+        .fetch("geonames")
 
       if results.any?
         wrap_in_search_result(results.first)
@@ -57,21 +76,6 @@ module Gemonames
         NoResultFound.new
       end
     end
-
-    def reverse_find(latitude:, longitude:)
-      results = WebServices.find_nearby_place_name(
-        connection,
-        latitude: latitude, longitude: longitude, max_rows: 1
-      ).body.fetch("geonames")
-
-      if results.any?
-        wrap_in_search_result(results.first)
-      else
-        NoResultFound.new
-      end
-    end
-
-    private
 
     def wrap_in_search_result(result)
       SearchResult.with(

@@ -6,6 +6,6 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "**.rb"
+  - "lib/**.rb"
 exclude_paths:
 - spec/**/*

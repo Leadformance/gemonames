@@ -43,12 +43,12 @@ module Gemonames
 
     def find(query, country_code:)
       perform_find :search,
-        query: query, country: country_code, maxRows: 1
+        query: query, country: country_code
     end
 
     def reverse_find(latitude:, longitude:)
       perform_find :find_nearby_place_name,
-        lat: latitude, lng: longitude, maxRows: 1
+        lat: latitude, lng: longitude
     end
 
     private
@@ -65,6 +65,8 @@ module Gemonames
     end
 
     def perform_find(endpoint, **args)
+      args = args.merge(maxRows: 1)
+
       results = WebServices
         .public_send(endpoint, connection, **args)
         .body

@@ -46,6 +46,11 @@ module Gemonames
         query: query, country: country_code
     end
 
+    def reverse_search(latitude:, longitude:, limit: 10)
+      perform_search :find_nearby_place_name,
+        lat: latitude, lng: longitude, maxRows: limit
+    end
+
     def reverse_find(latitude:, longitude:)
       perform_find :find_nearby_place_name,
         lat: latitude, lng: longitude

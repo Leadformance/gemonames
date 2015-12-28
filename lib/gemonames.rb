@@ -40,7 +40,7 @@ module Gemonames
       WebServices.search(
         connection,
         query: query, country_code: country_code, max_rows: limit
-      ).fetch("geonames").map { |result|
+      ).body.fetch("geonames").map { |result|
         wrap_in_search_result(result)
       }
     end
@@ -49,7 +49,7 @@ module Gemonames
       results = WebServices.search(
         connection,
         query: query, country_code: country_code, max_rows: 1
-      ).fetch("geonames")
+      ).body.fetch("geonames")
 
       if results.any?
         wrap_in_search_result(results.first)
@@ -62,7 +62,7 @@ module Gemonames
       results = WebServices.find_nearby_place_name(
         connection,
         latitude: latitude, longitude: longitude, max_rows: 1
-      ).fetch("geonames")
+      ).body.fetch("geonames")
 
       if results.any?
         wrap_in_search_result(results.first)

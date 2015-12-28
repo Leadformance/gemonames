@@ -38,17 +38,17 @@ module Gemonames
 
     def search(query, country_code:, limit: 10)
       perform_search :search,
-        query: query, country_code: country_code, max_rows: limit
+        query: query, country: country_code, maxRows: limit
     end
 
     def find(query, country_code:)
       perform_find :search,
-        query: query, country_code: country_code, max_rows: 1
+        query: query, country: country_code, maxRows: 1
     end
 
     def reverse_find(latitude:, longitude:)
       perform_find :find_nearby_place_name,
-        latitude: latitude, longitude: longitude, max_rows: 1
+        lat: latitude, lng: longitude, maxRows: 1
     end
 
     private

@@ -100,6 +100,28 @@ describe Gemonames do
     end
   end
 
+  describe "#reverse_find" do
+    it "finds place based on latitude and longitude" do
+      result = VCR.use_cassette "find-reverse" do
+        client.reverse_find(latitude: 45.57, longitude: 5.9118)
+      end
+
+      aggregate_failures do
+        expect(result.result?).to be_truthy
+        expect(result).to have_attributes(
+          name: "Cognin",
+          geoname_id: 3024426,
+          country_code: "FR",
+          country_id: "3017382",
+          admin_id1: "2983751",
+          admin_id2: "2975517",
+          admin_id3: "3027421",
+          admin_id4: "6455252",
+        )
+      end
+    end
+  end
+
   it "uses free endpoint when initialized without token" do
     connection = Gemonames.build_connection(
       username: "demo",

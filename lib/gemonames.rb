@@ -58,6 +58,19 @@ module Gemonames
       end
     end
 
+    def reverse_find(latitude:, longitude:)
+      results = WebServices.find_nearby_place_name(
+        connection,
+        latitude: latitude, longitude: longitude, max_rows: 1
+      ).fetch("geonames")
+
+      if results.any?
+        wrap_in_search_result(results.first)
+      else
+        NoResultFound.new
+      end
+    end
+
     private
 
     def wrap_in_search_result(result)

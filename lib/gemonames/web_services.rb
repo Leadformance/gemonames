@@ -13,5 +13,17 @@ module Gemonames
 
       results.body
     end
+
+    def find_nearby_place_name(connection, latitude:, longitude:, max_rows:)
+      results = connection.get do |request|
+        request.url "/findNearbyPlaceNameJSON".freeze
+        request.params[:lat] = latitude
+        request.params[:lng] = longitude
+        request.params[:maxRows] = max_rows
+        request.params[:style] = "full".freeze
+      end
+
+      results.body
+    end
   end
 end

@@ -54,10 +54,9 @@ module Gemonames
     private
 
     def perform_search(endpoint, **args)
-      results = WebServices
-        .public_send(endpoint, connection, **args)
-        .body
-        .fetch("geonames")
+      results = extract_payload(
+        WebServices.public_send(endpoint, connection, **args)
+      )
 
       results.map { |result|
         wrap_in_search_result(result)
@@ -67,16 +66,19 @@ module Gemonames
     def perform_find(endpoint, **args)
       args = args.merge(maxRows: 1)
 
-      results = WebServices
-        .public_send(endpoint, connection, **args)
-        .body
-        .fetch("geonames")
+      results = extract_payload(
+        WebServices.public_send(endpoint, connection, **args)
+      )
 
       if results.any?
         wrap_in_search_result(results.first)
       else
         NoResultFound.new
       end
+    end
+
+    def extract_payload(results)
+      results.body.fetch("geonames")
     end
 
     def wrap_in_search_result(result)

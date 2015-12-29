@@ -1,7 +1,7 @@
-require "gemonames/version"
-require "gemonames/api_client"
 require "faraday"
 require "faraday_middleware"
+require "gemonames/version"
+require "gemonames/api_client"
 require "gemonames/response_logger"
 
 module Gemonames
@@ -10,7 +10,7 @@ module Gemonames
   FREE_ENDPOINT = "http://api.geonames.org"
   PREMIUM_ENDPOINT = "http://ws.geonames.net"
 
-  def client(username:, connection: nil, token: nil, logger: nil)
+  def client(connection: nil, username:, token: nil, logger: nil)
     connection ||= build_connection(
       username: username, token: token, logger: logger
     )

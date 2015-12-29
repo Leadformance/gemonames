@@ -1,9 +1,26 @@
 require "logger"
 
 describe Gemonames do
-  let(:client) { Gemonames.client(username: "demo") }
 
   describe ".build_connection" do
+    it "uses free endpoint when initialized without token" do
+      connection = Gemonames.build_connection(
+        username: "demo",
+        token: nil,
+        logger: nil,
+      )
+      expect(connection.url_prefix).to eq(URI("http://api.geonames.org"))
+    end
+
+    it "uses premium endpoint when initialized with a token" do
+      connection = Gemonames.build_connection(
+        username: "demo",
+        token: "immaginary-demo-token",
+        logger: nil,
+      )
+      expect(connection.url_prefix).to eq(URI("http://ws.geonames.net"))
+    end
+
     it "does logging when provided with a logger" do
       log_output = StringIO.new
       connection = Gemonames.build_connection(
@@ -22,23 +39,5 @@ describe Gemonames do
         %Q{[Gemonames] method=GET status=200 url="http://api.geonames.org/searchJSON?}
       )
     end
-  end
-
-  it "uses free endpoint when initialized without token" do
-    connection = Gemonames.build_connection(
-      username: "demo",
-      token: nil,
-      logger: nil,
-    )
-    expect(connection.url_prefix).to eq(URI("http://api.geonames.org"))
-  end
-
-  it "uses premium endpoint when initialized with a token" do
-    connection = Gemonames.build_connection(
-      username: "demo",
-      token: "immaginary-demo-token",
-      logger: nil,
-    )
-    expect(connection.url_prefix).to eq(URI("http://ws.geonames.net"))
   end
 end

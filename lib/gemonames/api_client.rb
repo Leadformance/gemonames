@@ -10,7 +10,7 @@ module Gemonames
     end
 
     def search(query, country_code:, limit: 10)
-      perform_search :search,
+      perform :search,
         query: query, country: country_code, maxRows: limit
     end
 
@@ -19,7 +19,7 @@ module Gemonames
     end
 
     def reverse_search(latitude:, longitude:, limit: 10)
-      perform_search :find_nearby_place_name,
+      perform :find_nearby_place_name,
         lat: latitude, lng: longitude, maxRows: limit
     end
 
@@ -29,7 +29,7 @@ module Gemonames
 
     private
 
-    def perform_search(endpoint, **args)
+    def perform(endpoint, **args)
       extract_payload(
         WebServices.public_send(endpoint, connection, **args)
       )

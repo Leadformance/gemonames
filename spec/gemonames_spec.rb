@@ -15,7 +15,7 @@ describe Gemonames do
     it "uses premium endpoint when initialized with a token" do
       connection = Gemonames.build_connection(
         username: "demo",
-        token: "immaginary-demo-token",
+        token: "imaginary-demo-token",
         logger: nil,
       )
       expect(connection.url_prefix).to eq(URI("http://ws.geonames.net"))

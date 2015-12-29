@@ -10,11 +10,10 @@ module Gemonames
   FREE_ENDPOINT = "http://api.geonames.org"
   PREMIUM_ENDPOINT = "http://ws.geonames.net"
 
-  def client(connection: nil, username:, token: nil, logger: nil)
-    connection ||= build_connection(
-      username: username, token: token, logger: logger
+  def client(username:, token: nil, logger: nil)
+    ApiClient.new(
+      build_connection(username: username, token: token, logger: logger)
     )
-    ApiClient.new(connection)
   end
 
   def build_connection(username:, token:, logger:)

@@ -1,6 +1,21 @@
 require "logger"
 
 describe Gemonames do
+  describe ".client" do
+    it "builds an ApiClient with given username" do
+      client = Gemonames.client(username: "name-of-user")
+
+      expect(client.connection.params)
+        .to match(hash_including(username: "name-of-user"))
+    end
+
+    it "builds an ApiClient with given token" do
+      client = Gemonames.client(username: "name-of-user", token: "token-of-user")
+
+      expect(client.connection.params)
+        .to match(hash_including(token: "token-of-user"))
+    end
+  end
 
   describe ".build_connection" do
     it "uses free endpoint when initialized without token" do

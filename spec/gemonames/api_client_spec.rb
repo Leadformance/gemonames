@@ -87,7 +87,7 @@ module Gemonames
 
     describe "#reverse_find" do
       it "finds place based on latitude and longitude" do
-        result = VCR.use_cassette "find-reverse" do
+        result = VCR.use_cassette "reverse-find" do
           client.reverse_find(latitude: 45.57, longitude: 5.9118)
         end
 

@@ -41,7 +41,7 @@ module Gemonames
         end
 
         aggregate_failures do
-          expect(result.result?).to be_truthy
+          expect(result.present?).to be_truthy
           expect(result).to have_attributes(
             geoname_id: 3202781,
             name: "Celje",
@@ -60,7 +60,7 @@ module Gemonames
           client.find("UnknownPlace", country_code: "si")
         end
 
-        expect(result.result?).to be_falsey
+        expect(result.present?).to be_falsey
       end
     end
 
@@ -92,7 +92,7 @@ module Gemonames
         end
 
         aggregate_failures do
-          expect(result.result?).to be_truthy
+          expect(result.present?).to be_truthy
           expect(result).to have_attributes(
             name: "Cognin",
             geoname_id: 3024426,

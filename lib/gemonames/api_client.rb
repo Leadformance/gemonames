@@ -82,8 +82,7 @@ module Gemonames
     :country_id,
     :result,
   ) do
-    def result?
-      result
-    end
+    alias_method :result?, :result
+    alias_method :present?, :result
   end
 end

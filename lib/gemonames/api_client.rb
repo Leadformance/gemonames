@@ -14,9 +14,8 @@ module Gemonames
         query: query, country: country_code, maxRows: limit
     end
 
-    def find(query, country_code:)
-      perform_find :search,
-        query: query, country: country_code
+    def find(query, **args)
+      one_result(search(query, **args.merge(limit: 1)))
     end
 
     def reverse_search(latitude:, longitude:, limit: 10)
@@ -24,39 +23,37 @@ module Gemonames
         lat: latitude, lng: longitude, maxRows: limit
     end
 
-    def reverse_find(latitude:, longitude:)
-      perform_find :find_nearby_place_name,
-        lat: latitude, lng: longitude
+    def reverse_find(**args)
+      one_result(reverse_search(**args.merge(limit: 1)))
     end
 
     private
 
     def perform_search(endpoint, **args)
-      results = extract_payload(
+      extract_payload(
         WebServices.public_send(endpoint, connection, **args)
       )
-
-      results.map { |result|
-        wrap_in_search_result(result)
-      }
     end
 
-    def perform_find(endpoint, **args)
-      args = args.merge(maxRows: 1)
-
-      results = extract_payload(
-        WebServices.public_send(endpoint, connection, **args)
+    def one_result(results)
+      results.first || SearchResult.with(
+        geoname_id: nil,
+        name: nil,
+        country_code: nil,
+        admin_id4: nil,
+        admin_id3: nil,
+        admin_id2: nil,
+        admin_id1: nil,
+        country_id: nil,
+        result: false
       )
-
-      if results.any?
-        wrap_in_search_result(results.first)
-      else
-        NoResultFound.new
-      end
     end
 
-    def extract_payload(results)
-      results.body.fetch("geonames")
+    def extract_payload(response)
+      response.body
+        .fetch("geonames")
+        .lazy
+        .map { |result| wrap_in_search_result(result) }
     end
 
     def wrap_in_search_result(result)
@@ -69,6 +66,7 @@ module Gemonames
         admin_id2: result["adminId2".freeze],
         admin_id1: result["adminId1".freeze],
         country_id: result["countryId".freeze],
+        result: true
       )
     end
   end
@@ -82,24 +80,10 @@ module Gemonames
     :admin_id2,
     :admin_id1,
     :country_id,
+    :result,
   ) do
     def result?
-      true
-    end
-  end
-
-  class NoResultFound
-    def geoname_id() end
-    def name() end
-    def country_code() end
-    def admin_id4() end
-    def admin_id3() end
-    def admin_id2() end
-    def admin_id1() end
-    def country_id() end
-
-    def result?
-      false
+      result
     end
   end
 end

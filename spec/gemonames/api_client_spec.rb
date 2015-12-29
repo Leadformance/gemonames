@@ -30,7 +30,7 @@ module Gemonames
           client.search("UnknownPlace", country_code: "si")
         end
 
-        expect(results).to be_empty
+        expect(results.any?).to eq(false)
       end
     end
 

@@ -4,6 +4,27 @@ require "logger"
 describe Gemonames do
   let(:client) { Gemonames.client(username: "demo") }
 
+  describe ".build_connection" do
+    it "does logging when provided with a logger" do
+      log_output = StringIO.new
+      connection = Gemonames.build_connection(
+        username: "demo",
+        logger: Logger.new(log_output),
+        token: nil,
+      )
+
+      VCR.use_cassette "search-city-and-country-code" do
+        connection.get("searchJSON", q: "Celje", country: "si", maxRows: 5, style: "full")
+      end
+
+      log_output.rewind
+
+      expect(log_output.read).to include(
+        %Q{[Gemonames] method=GET status=200 url="http://api.geonames.org/searchJSON?}
+      )
+    end
+  end
+
   describe "#search" do
     it "performs a search based on city and country code" do
       results = VCR.use_cassette "search-city-and-country-code" do
@@ -31,24 +52,6 @@ describe Gemonames do
       end
 
       expect(results).to be_empty
-    end
-
-    it "does logging when provided with a logger" do
-      log_output = StringIO.new
-      client = Gemonames.client(
-        username: "demo",
-        logger: Logger.new(log_output)
-      )
-
-      VCR.use_cassette "search-city-and-country-code" do
-        client.search("Celje", limit: 5, country_code: "si")
-      end
-
-      log_output.rewind
-
-      expect(log_output.read).to include(
-        %Q{[Gemonames] method=GET status=200 url="http://api.geonames.org/searchJSON?}
-      )
     end
   end
 

@@ -106,5 +106,21 @@ module Gemonames
         end
       end
     end
+
+    describe "#perfom" do
+      let(:client) { Gemonames.client(username: "there-is-no-chance-this-client-exists") }
+      it "raises ApiError when api responds with 'status' key" do
+        VCR.use_cassette "search-with-missing-parameters" do
+          expect{
+            client.perform(
+              :search,
+              query: nil,
+              country: nil,
+              maxRows: 1
+            )
+          }.to raise_error ApiError
+        end
+      end
+    end
   end
 end

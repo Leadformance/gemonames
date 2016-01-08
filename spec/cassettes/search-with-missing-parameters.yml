@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.geonames.org/searchJSON?country&maxRows=1&q&style=full&username=there-is-no-chance-this-client-exists
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 08 Jan 2016 11:40:13 GMT
+      server:
+      - Apache/2.4.6 (Linux/SUSE)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '56'
+      connection:
+      - close
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"status":{"message":"user does not exist.","value":10}}'
+    http_version: 
+  recorded_at: Fri, 08 Jan 2016 11:40:13 GMT
+recorded_with: VCR 2.9.3

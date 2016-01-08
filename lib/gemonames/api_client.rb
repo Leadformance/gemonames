@@ -2,6 +2,17 @@ require "values"
 require "gemonames/web_services"
 
 module Gemonames
+  class ApiError < StandardError
+    def initialize(message, error_code)
+      super(message)
+      @error_code = error_code
+    end
+
+    def to_s
+      "#{super} (error code: #{@error_code})"
+    end
+  end
+
   class ApiClient
     attr_reader :connection
 
@@ -27,13 +38,13 @@ module Gemonames
       one_result(reverse_search(**args.merge(limit: 1)))
     end
 
-    private
-
     def perform(endpoint, **args)
       extract_payload(
         WebServices.public_send(endpoint, connection, **args)
       )
     end
+
+    private
 
     def one_result(results)
       results.first || SearchResult.with(
@@ -50,10 +61,19 @@ module Gemonames
     end
 
     def extract_payload(response)
+      raise_on_error(response)
+
       response.body
         .fetch("geonames")
         .lazy
         .map { |result| wrap_in_search_result(result) }
+    end
+
+    def raise_on_error(response)
+      status = response.body["status"]
+      if status
+        raise ApiError.new(*status.values_at("message", "value"))
+      end
     end
 
     def wrap_in_search_result(result)

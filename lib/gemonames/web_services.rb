@@ -21,5 +21,12 @@ module Gemonames
         request.params[:style] = "full".freeze
       end
     end
+
+    def country_info(connection, country: nil)
+      connection.get do |request|
+        request.url "/countryInfoJSON".freeze
+        request.params[:country] = country if country
+      end
+    end
   end
 end

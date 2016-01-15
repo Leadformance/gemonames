@@ -122,5 +122,73 @@ module Gemonames
         end
       end
     end
+
+    describe "#countries_info" do
+      it "returns all countries info" do
+        results = VCR.use_cassette "country-info-all-countries" do
+          client.countries_info
+        end
+
+        aggregate_failures do
+          expect(results.count).to eq(250)
+          expect(results.first).to(
+            have_attributes(
+              country_name: "Andorra",
+              currency_code: "EUR",
+              fips_code: "AN",
+              country_code: "AD",
+              iso_numeric: "020",
+              north: 42.65604389629997,
+              capital: "Andorra la Vella",
+              continent_name: "Europe",
+              area_in_sq_km: "468.0",
+              languages: "ca",
+              iso_alpha3: "AND",
+              continent: "EU",
+              south: 42.42849259876837,
+              east: 1.7865427778319827,
+              geoname_id: 3041565,
+              west: 1.4071867141112762,
+              population: "84000",
+              result: true
+            )
+          )
+        end
+      end
+    end
+
+    describe "#country_info" do
+      it "returns one country info" do
+        result = VCR.use_cassette "country-info-poland" do
+          client.country_info(country: "pl")
+        end
+
+        aggregate_failures do
+          expect(result.present?).to be_truthy
+          expect(result).to(
+            have_attributes(
+              country_name: "Poland",
+              currency_code: "PLN",
+              fips_code: "PL",
+              country_code: "PL",
+              iso_numeric: "616",
+              north: 54.839138,
+              capital: "Warsaw",
+              continent_name: "Europe",
+              area_in_sq_km: "312685.0",
+              languages: "pl",
+              iso_alpha3: "POL",
+              continent: "EU",
+              south:  49.006363,
+              east: 24.150749,
+              geoname_id: 798544,
+              west: 14.123,
+              population: "38500000",
+              result: true
+            )
+          )
+        end
+      end
+    end
   end
 end

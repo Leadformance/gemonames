@@ -63,6 +63,16 @@ module Gemonames
       )
     end
 
+    def country_regions(country_code:, fcode:, limit: 100)
+      perform(
+        :search,
+        wrapper: search_result_wrapper,
+        country: country_code,
+        fcode: fcode,
+        maxRows: limit
+      )
+    end
+
     def perform(endpoint, wrapper: search_result_wrapper, **args)
       extract_payload(
         WebServices.public_send(endpoint, connection, **args),

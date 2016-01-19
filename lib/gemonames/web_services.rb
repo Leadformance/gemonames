@@ -2,10 +2,11 @@ module Gemonames
   module WebServices
     module_function
 
-    def search(connection, q:, country:, maxRows:)
+    def search(connection, q: nil, fcode: nil, country:, maxRows:)
       connection.get do |request|
         request.url "/searchJSON".freeze
-        request.params[:q] = q
+        request.params[:q] = q if q
+        request.params[:fcode] = fcode if fcode
         request.params[:country] = country
         request.params[:maxRows] = maxRows
         request.params[:style] = "full".freeze

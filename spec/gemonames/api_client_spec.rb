@@ -31,7 +31,7 @@ module Gemonames
         end
 
         expect(results.any?).to eq(false)
-      end
+     end
     end
 
     describe "#find" do
@@ -186,6 +186,29 @@ module Gemonames
               population: "38500000",
               result: true
             )
+          )
+        end
+      end
+    end
+
+    describe "#country_regions" do
+      it "returns country regions at provided admin level" do
+        results = VCR.use_cassette "country-regions-at-admin-level" do
+          client.country_regions(country_code: "si", fcode: "ADM1", limit: 500)
+        end
+
+        result = results.find { |region| region.geoname_id == 3239050 }
+        aggregate_failures do
+          expect(results.size).to eq(210)
+          expect(result).to have_attributes(
+            geoname_id: 3239050,
+            name: "Hrpelje-Kozina",
+            country_code: "SI",
+            admin_id4: nil,
+            admin_id3: nil,
+            admin_id2: nil,
+            admin_id1: "3239050",
+            country_id: "3190538",
           )
         end
       end

@@ -23,7 +23,7 @@ module Gemonames
     def search(query, country_code:, limit: 10)
       perform :search,
         wrapper: search_result_wrapper,
-        query: query,
+        q: query,
         country: country_code,
         maxRows: limit
     end

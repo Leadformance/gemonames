@@ -114,7 +114,7 @@ module Gemonames
           expect{
             client.perform(
               :search,
-              query: nil,
+              q: nil,
               country: nil,
               maxRows: 1
             )

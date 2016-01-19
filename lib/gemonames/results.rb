@@ -8,6 +8,7 @@ module Gemonames
     :admin_id2,
     :admin_id1,
     :country_id,
+    :feature_code,
     :result,
   ) do
     alias_method :result?, :result
@@ -23,6 +24,7 @@ module Gemonames
         admin_id2: nil,
         admin_id1: nil,
         country_id: nil,
+        feature_code: nil,
         result: false
       )
     end

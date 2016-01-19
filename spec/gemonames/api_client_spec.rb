@@ -21,6 +21,7 @@ module Gemonames
             admin_id2: nil,
             admin_id1: "3202780",
             country_id: "3190538",
+            feature_code: "PPLA",
           )
         end
       end
@@ -194,7 +195,7 @@ module Gemonames
     describe "#country_regions" do
       it "returns country regions at provided admin level" do
         results = VCR.use_cassette "country-regions-at-admin-level" do
-          client.country_regions(country_code: "si", fcode: "ADM1", limit: 500)
+          client.country_regions(country_code: "si", feature_code: "ADM1", limit: 500)
         end
 
         result = results.find { |region| region.geoname_id == 3239050 }

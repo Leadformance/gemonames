@@ -64,12 +64,12 @@ module Gemonames
       )
     end
 
-    def country_regions(country_code:, fcode:, limit: 100)
+    def country_regions(country_code:, feature_code:, limit: 100)
       perform(
         :search,
         wrapper: search_result_wrapper,
         country: country_code,
-        fcode: fcode,
+        fcode: feature_code,
         maxRows: limit
       )
     end
@@ -114,6 +114,7 @@ module Gemonames
           admin_id2: result["adminId2".freeze],
           admin_id1: result["adminId1".freeze],
           country_id: result["countryId".freeze],
+          feature_code: result["fcode"],
           result: true
         )
       end

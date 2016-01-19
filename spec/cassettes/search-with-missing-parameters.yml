@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api.geonames.org/searchJSON?country&maxRows=1&q&style=full&username=there-is-no-chance-this-client-exists
+    uri: http://api.geonames.org/searchJSON?country&maxRows=1&style=full&username=there-is-no-chance-this-client-exists
     body:
       encoding: US-ASCII
       string: ''
@@ -15,7 +15,7 @@ http_interactions:
       message: 
     headers:
       date:
-      - Fri, 08 Jan 2016 11:40:13 GMT
+      - Tue, 19 Jan 2016 10:49:24 GMT
       server:
       - Apache/2.4.6 (Linux/SUSE)
       cache-control:
@@ -32,5 +32,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"status":{"message":"user does not exist.","value":10}}'
     http_version: 
-  recorded_at: Fri, 08 Jan 2016 11:40:13 GMT
+  recorded_at: Tue, 19 Jan 2016 10:49:24 GMT
 recorded_with: VCR 2.9.3

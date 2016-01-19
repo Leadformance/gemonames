@@ -1,4 +1,5 @@
 require "values"
+require "gemonames/results"
 require "gemonames/web_services"
 
 module Gemonames
@@ -23,7 +24,7 @@ module Gemonames
     def search(query, country_code:, limit: 10)
       perform :search,
         wrapper: search_result_wrapper,
-        query: query,
+        q: query,
         country: country_code,
         maxRows: limit
     end
@@ -31,7 +32,7 @@ module Gemonames
     def find(query, **args)
       one_result(
         search(query, **args.merge(limit: 1)),
-        null_result: search_null_result
+        null_result: -> { SearchResult.with_nil }
       )
     end
 
@@ -46,7 +47,7 @@ module Gemonames
     def reverse_find(**args)
       one_result(
         reverse_search(**args.merge(limit: 1)),
-        null_result: search_null_result
+        null_result: -> { SearchResult.with_nil }
       )
     end
 
@@ -59,7 +60,17 @@ module Gemonames
     def country_info(country:)
       one_result(
         countries_info(country: country),
-        null_result: country_info_null_result
+        null_result: -> { CountryInfoResult.with_nil }
+      )
+    end
+
+    def country_regions(country_code:, feature_code:, limit: 100)
+      perform(
+        :search,
+        wrapper: search_result_wrapper,
+        country: country_code,
+        fcode: feature_code,
+        maxRows: limit
       )
     end
 
@@ -72,8 +83,8 @@ module Gemonames
 
     private
 
-    def one_result(results, null_result:)
-      results.first || null_result
+    def one_result(results, null_result: -> {})
+      results.first || null_result.call
     end
 
     def extract_payload(response, wrapper)
@@ -92,43 +103,6 @@ module Gemonames
       end
     end
 
-    def search_null_result
-      @search_null_result ||= SearchResult.with(
-        geoname_id: nil,
-        name: nil,
-        country_code: nil,
-        admin_id4: nil,
-        admin_id3: nil,
-        admin_id2: nil,
-        admin_id1: nil,
-        country_id: nil,
-        result: false
-      )
-    end
-
-    def country_info_null_result
-      @country_info_null_result ||= CountryInfoResult.with(
-        country_name: nil,
-        currency_code: nil,
-        fips_code: nil,
-        country_code: nil,
-        iso_numeric: nil,
-        north: nil,
-        capital: nil,
-        continent_name: nil,
-        area_in_sq_km: nil,
-        languages: nil,
-        iso_alpha3: nil,
-        continent: nil,
-        south: nil,
-        east: nil,
-        geoname_id: nil,
-        west: nil,
-        population: nil,
-        result: false
-      )
-    end
-
     def search_result_wrapper
       lambda do |result|
         SearchResult.with(
@@ -140,6 +114,7 @@ module Gemonames
           admin_id2: result["adminId2".freeze],
           admin_id1: result["adminId1".freeze],
           country_id: result["countryId".freeze],
+          feature_code: result["fcode"],
           result: true
         )
       end
@@ -176,44 +151,5 @@ module Gemonames
       west: "west".freeze,
       population: "population".freeze,
     }
-  end
-
-  SearchResult = Value.new(
-    :geoname_id,
-    :name,
-    :country_code,
-    :admin_id4,
-    :admin_id3,
-    :admin_id2,
-    :admin_id1,
-    :country_id,
-    :result,
-  ) do
-    alias_method :result?, :result
-    alias_method :present?, :result
-  end
-
-  CountryInfoResult = Value.new(
-    :country_name,
-    :currency_code,
-    :fips_code,
-    :country_code,
-    :iso_numeric,
-    :north,
-    :capital,
-    :continent_name,
-    :area_in_sq_km,
-    :languages,
-    :iso_alpha3,
-    :continent,
-    :south,
-    :east,
-    :geoname_id,
-    :west,
-    :population,
-    :result,
-  ) do
-    alias_method :result?, :result
-    alias_method :present?, :result
   end
 end

@@ -161,7 +161,7 @@ module Gemonames
     describe "#country_info" do
       it "returns one country info" do
         result = VCR.use_cassette "country-info-poland" do
-          client.country_info(country: "pl")
+          client.country_info(country_code: "pl")
         end
 
         aggregate_failures do

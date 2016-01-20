@@ -51,15 +51,15 @@ module Gemonames
       )
     end
 
-    def countries_info(country: nil)
+    def countries_info(country_code: nil)
       perform :country_info,
         wrapper: country_info_wrapper,
-        country: country
+        country: country_code
     end
 
-    def country_info(country:)
+    def country_info(country_code:)
       one_result(
-        countries_info(country: country),
+        countries_info(country_code: country_code),
         null_result: -> { CountryInfoResult.with_nil }
       )
     end

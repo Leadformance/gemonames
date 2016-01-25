@@ -106,15 +106,17 @@ module Gemonames
     def search_result_wrapper
       lambda do |result|
         SearchResult.with(
-          geoname_id: result.fetch("geonameId".freeze),
-          name: result.fetch("name".freeze),
-          country_code: result.fetch("countryCode".freeze),
-          admin_id4: result["adminId4".freeze],
-          admin_id3: result["adminId3".freeze],
-          admin_id2: result["adminId2".freeze],
           admin_id1: result["adminId1".freeze],
+          admin_id2: result["adminId2".freeze],
+          admin_id3: result["adminId3".freeze],
+          admin_id4: result["adminId4".freeze],
+          country_code: result.fetch("countryCode".freeze),
           country_id: result["countryId".freeze],
           feature_code: result["fcode"],
+          geoname_id: result.fetch("geonameId".freeze),
+          latitude: result.fetch("lat".freeze),
+          longitude: result.fetch("lng".freeze),
+          name: result.fetch("name".freeze),
           result: true
         )
       end

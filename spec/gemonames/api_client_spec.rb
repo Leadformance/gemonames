@@ -13,15 +13,17 @@ module Gemonames
         aggregate_failures do
           expect(results.size).to eq(5)
           expect(results.first).to have_attributes(
-            geoname_id: 3202781,
-            name: "Celje",
-            country_code: "SI",
-            admin_id4: nil,
-            admin_id3: nil,
-            admin_id2: nil,
             admin_id1: "3202780",
+            admin_id2: nil,
+            admin_id3: nil,
+            admin_id4: nil,
+            country_code: "SI",
             country_id: "3190538",
             feature_code: "PPLA",
+            geoname_id: 3202781,
+            latitude: "46.23092",
+            longitude: "15.26044",
+            name: "Celje",
           )
         end
       end
@@ -44,14 +46,16 @@ module Gemonames
         aggregate_failures do
           expect(result.present?).to be_truthy
           expect(result).to have_attributes(
-            geoname_id: 3202781,
-            name: "Celje",
-            country_code: "SI",
-            admin_id4: nil,
-            admin_id3: nil,
-            admin_id2: nil,
             admin_id1: "3202780",
+            admin_id2: nil,
+            admin_id3: nil,
+            admin_id4: nil,
+            country_code: "SI",
             country_id: "3190538",
+            geoname_id: 3202781,
+            latitude: "46.23092",
+            longitude: "15.26044",
+            name: "Celje",
           )
         end
       end
@@ -73,14 +77,16 @@ module Gemonames
 
         aggregate_failures do
           expect(results.first).to have_attributes(
-            name: "Cognin",
-            geoname_id: 3024426,
-            country_code: "FR",
-            country_id: "3017382",
             admin_id1: "2983751",
             admin_id2: "2975517",
             admin_id3: "3027421",
             admin_id4: "6455252",
+            country_code: "FR",
+            country_id: "3017382",
+            geoname_id: 3024426,
+            latitude: "45.56377",
+            longitude: "5.89435",
+            name: "Cognin",
           )
         end
       end
@@ -95,14 +101,16 @@ module Gemonames
         aggregate_failures do
           expect(result.present?).to be_truthy
           expect(result).to have_attributes(
-            name: "Cognin",
-            geoname_id: 3024426,
-            country_code: "FR",
-            country_id: "3017382",
             admin_id1: "2983751",
             admin_id2: "2975517",
             admin_id3: "3027421",
             admin_id4: "6455252",
+            country_code: "FR",
+            country_id: "3017382",
+            geoname_id: 3024426,
+            latitude: "45.56377",
+            longitude: "5.89435",
+            name: "Cognin",
           )
         end
       end
@@ -202,14 +210,16 @@ module Gemonames
         aggregate_failures do
           expect(results.size).to eq(210)
           expect(result).to have_attributes(
-            geoname_id: 3239050,
-            name: "Hrpelje-Kozina",
-            country_code: "SI",
-            admin_id4: nil,
-            admin_id3: nil,
-            admin_id2: nil,
             admin_id1: "3239050",
+            admin_id2: nil,
+            admin_id3: nil,
+            admin_id4: nil,
+            country_code: "SI",
             country_id: "3190538",
+            geoname_id: 3239050,
+            latitude: "45.57278",
+            longitude: "14.00472",
+            name: "Hrpelje-Kozina",
           )
         end
       end

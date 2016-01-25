@@ -103,53 +103,72 @@ module Gemonames
       end
     end
 
-    def search_result_wrapper
+    def wrapper(klass, mapping)
       lambda do |result|
-        SearchResult.with(
-          geoname_id: result.fetch("geonameId".freeze),
-          name: result.fetch("name".freeze),
-          country_code: result.fetch("countryCode".freeze),
-          admin_id4: result["adminId4".freeze],
-          admin_id3: result["adminId3".freeze],
-          admin_id2: result["adminId2".freeze],
-          admin_id1: result["adminId1".freeze],
-          country_id: result["countryId".freeze],
-          feature_code: result["fcode"],
-          result: true
-        )
-      end
-    end
-
-    def country_info_wrapper
-      lambda do |result|
-        CountryInfoResult.with(
-          COUNTRY_INFO_MAPPING
+        required = mapping[:required]
           .each_with_object({}) do |(k, v), memo|
             memo.merge!(k => result.fetch(v))
           end
+        optional = mapping[:optional]
+          .each_with_object({}) do |(k, v), memo|
+            memo.merge!(k => result[v])
+          end
+        klass.with(
+          required
+          .merge(optional)
           .merge(result: true)
         )
       end
     end
 
+    def search_result_wrapper
+      wrapper(SearchResult, SEARCH_RESULT_MAPPING)
+    end
+
+    def country_info_wrapper
+      wrapper(CountryInfoResult, COUNTRY_INFO_MAPPING)
+    end
+
+    SEARCH_RESULT_MAPPING = {
+      optional:  {
+        admin_id1: "adminId1".freeze,
+        admin_id2: "adminId2".freeze,
+        admin_id3: "adminId3".freeze,
+        admin_id4: "adminId4".freeze,
+        country_id: "countryId".freeze,
+        feature_code: "fcode".freeze,
+      },
+      required: {
+        country_code: "countryCode".freeze,
+        geoname_id: "geonameId".freeze,
+        latitude: "lat".freeze,
+        longitude: "lng".freeze,
+        name: "name".freeze,
+      }
+    }
+
     COUNTRY_INFO_MAPPING = {
-      country_name: "countryName".freeze,
-      currency_code: "currencyCode".freeze,
-      fips_code: "fipsCode".freeze,
-      country_code: "countryCode".freeze,
-      iso_numeric: "isoNumeric".freeze,
-      north: "north".freeze,
-      capital: "capital".freeze,
-      continent_name: "continentName".freeze,
-      area_in_sq_km: "areaInSqKm".freeze,
-      languages: "languages".freeze,
-      iso_alpha3: "isoAlpha3".freeze,
-      continent: "continent".freeze,
-      south: "south".freeze,
-      east: "east".freeze,
-      geoname_id: "geonameId".freeze,
-      west: "west".freeze,
-      population: "population".freeze,
+      optional: {
+      },
+      required: {
+        country_name: "countryName".freeze,
+        currency_code: "currencyCode".freeze,
+        fips_code: "fipsCode".freeze,
+        country_code: "countryCode".freeze,
+        iso_numeric: "isoNumeric".freeze,
+        north: "north".freeze,
+        capital: "capital".freeze,
+        continent_name: "continentName".freeze,
+        area_in_sq_km: "areaInSqKm".freeze,
+        languages: "languages".freeze,
+        iso_alpha3: "isoAlpha3".freeze,
+        continent: "continent".freeze,
+        south: "south".freeze,
+        east: "east".freeze,
+        geoname_id: "geonameId".freeze,
+        west: "west".freeze,
+        population: "population".freeze,
+      }
     }
   end
 end

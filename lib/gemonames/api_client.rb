@@ -74,6 +74,17 @@ module Gemonames
       )
     end
 
+    def timezone(latitude:, longitude:)
+      response = WebServices.public_send(
+        :timezone,
+        connection,
+        lat: latitude,
+        lng: longitude,
+      ).tap { |r| raise_on_error(r) }
+
+      timezone_wrapper[response.body]
+    end
+
     def perform(endpoint, wrapper: search_result_wrapper, **args)
       extract_payload(
         WebServices.public_send(endpoint, connection, **args),
@@ -129,6 +140,10 @@ module Gemonames
       wrapper(CountryInfoResult, COUNTRY_INFO_MAPPING)
     end
 
+    def timezone_wrapper
+      wrapper(TimezoneResult, TIMEZONE_MAPPING)
+    end
+
     SEARCH_RESULT_MAPPING = {
       optional:  {
         admin_id1: "adminId1".freeze,
@@ -168,6 +183,22 @@ module Gemonames
         geoname_id: "geonameId".freeze,
         west: "west".freeze,
         population: "population".freeze,
+      }
+    }
+
+    TIMEZONE_MAPPING = {
+      optional: {
+      },
+      required: {
+        country_code: "countryCode".freeze,
+        gmt_offset: "gmtOffset".freeze,
+        raw_offset: "rawOffset".freeze,
+        dst_offset: "dstOffset".freeze,
+        latitude: "lat".freeze,
+        longitude: "lng".freeze,
+        country_name: "countryName".freeze,
+        timezone_id: "timezoneId".freeze,
+
       }
     }
   end

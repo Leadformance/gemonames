@@ -29,5 +29,13 @@ module Gemonames
         request.params[:country] = country if country
       end
     end
+
+    def timezone(connection, lat:, lng:)
+      connection.get do |request|
+        request.url "/timezoneJSON".freeze
+        request.params[:lat] = lat
+        request.params[:lng] = lng
+      end
+    end
   end
 end

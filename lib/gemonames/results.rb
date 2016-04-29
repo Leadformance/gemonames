@@ -80,4 +80,33 @@ module Gemonames
       )
     end
   end
+
+  TimezoneResult = Value.new(
+    :country_code,
+    :gmt_offset,
+    :raw_offset,
+    :dst_offset,
+    :latitude,
+    :longitude,
+    :country_name,
+    :timezone_id,
+    :result,
+  ) do
+    alias_method :result?, :result
+    alias_method :present?, :result
+
+    def self.with_nil
+      with(
+        country_code: nil,
+        gmt_offset: nil,
+        raw_offset: nil,
+        dst_offset: nil,
+        latitude: nil,
+        longitude: nil,
+        country_name: nil,
+        timezone_id: nil,
+        result: false,
+      )
+    end
+  end
 end

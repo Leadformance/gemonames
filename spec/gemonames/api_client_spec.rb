@@ -224,5 +224,26 @@ module Gemonames
         end
       end
     end
+
+    describe "#timzone" do
+      it "returns timezone based on latitude/longitude" do
+        result = VCR.use_cassette "timezone" do
+          client.timezone(latitude: 47.01, longitude: 10.2)
+        end
+
+        aggregate_failures do
+          expect(result).to have_attributes(
+            country_code: "AT",
+            gmt_offset: 1,
+            raw_offset: 1,
+            dst_offset: 2,
+            latitude: 47.01,
+            longitude: 10.2,
+            country_name: "Austria",
+            timezone_id: "Europe/Vienna",
+          )
+        end
+      end
+    end
   end
 end

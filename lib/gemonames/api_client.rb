@@ -188,17 +188,16 @@ module Gemonames
 
     TIMEZONE_MAPPING = {
       optional: {
+        country_code: "countryCode".freeze,
+        country_name: "countryName".freeze,
+        timezone_id: "timezoneId".freeze,
       },
       required: {
-        country_code: "countryCode".freeze,
         gmt_offset: "gmtOffset".freeze,
         raw_offset: "rawOffset".freeze,
         dst_offset: "dstOffset".freeze,
         latitude: "lat".freeze,
         longitude: "lng".freeze,
-        country_name: "countryName".freeze,
-        timezone_id: "timezoneId".freeze,
-
       }
     }
   end
